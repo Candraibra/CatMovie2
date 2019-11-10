@@ -26,16 +26,16 @@ public class DetailTvActivity extends AppCompatActivity {
         //viewModel
         DetailViewModel viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
         //init views
-        ImageButton btnBack = findViewById(R.id.backButton);
-
-        imgPoster = findViewById(R.id.img_poster);
+//        ImageButton btnBack = findViewById(R.id.backButton);
+//
+//        imgPoster = findViewById(R.id.img_poster);
         tvTitle = findViewById(R.id.tv_title);
         tvDesc = findViewById(R.id.tv_desc);
         //btnBackOnClick
-        btnBack.setOnClickListener(v -> {
-            onBackPressed();
-            finish();
-        });
+//        btnBack.setOnClickListener(v -> {
+//            onBackPressed();
+//            finish();
+//        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

@@ -1,22 +1,26 @@
 package com.candraibra.catmovie2.service;
 
+import com.candraibra.catmovie2.BuildConfig;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private final static String MOVIE_DB_URL = "http://api.themoviedb.org/3/";
-    public static String API_KEY = "053130b8fdf68ca19c58155b4bd37bdd";
-    private static Retrofit retrofit = null;
+    private final static String BASE_URL = BuildConfig.Base_Url;
 
-    public static Retrofit getClient() {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(MOVIE_DB_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
+    static Retrofit getClient() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        final Retrofit build = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+        return build;
     }
+
 }
 

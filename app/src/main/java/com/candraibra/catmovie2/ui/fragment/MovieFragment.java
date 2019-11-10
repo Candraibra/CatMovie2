@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.adapter.MovieAdapter;
-import com.candraibra.catmovie2.data.Movie;
+import com.candraibra.catmovie2.data.local.Movie;
 import com.candraibra.catmovie2.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;

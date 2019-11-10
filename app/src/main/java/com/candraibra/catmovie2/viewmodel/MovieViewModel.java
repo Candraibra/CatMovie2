@@ -2,7 +2,7 @@ package com.candraibra.catmovie2.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import com.candraibra.catmovie2.data.Movie;
+import com.candraibra.catmovie2.data.local.Movie;
 import com.candraibra.catmovie2.utils.DummyData;
 
 import java.util.ArrayList;

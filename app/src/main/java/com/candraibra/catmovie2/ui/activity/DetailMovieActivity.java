@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.candraibra.catmovie2.R;
-import com.candraibra.catmovie2.data.Movie;
+import com.candraibra.catmovie2.data.local.Movie;
 import com.candraibra.catmovie2.viewmodel.DetailViewModel;
 
 public class DetailMovieActivity extends AppCompatActivity {

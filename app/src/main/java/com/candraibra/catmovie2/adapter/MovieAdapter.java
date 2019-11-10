@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.catmovie2.R;
-import com.candraibra.catmovie2.data.Movie;
+import com.candraibra.catmovie2.data.local.Movie;
 import com.candraibra.catmovie2.ui.activity.DetailMovieActivity;
 
 import java.util.ArrayList;

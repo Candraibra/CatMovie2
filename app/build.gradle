@@ -40,10 +40,27 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-common-java8:$archLifecycleVersion"
+
+
+    // Dependency for networking
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation "com.squareup.okhttp3:okhttp:4.2.1"
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
     // Dependencies for Paging
     implementation "androidx.paging:paging-runtime:$pagingVersion"
+
+    //Arc Layout
+    implementation 'com.github.florent37:arclayout:1.0.5'
+
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+
+    //Shimmer by Facebook
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     // Dependencies for Glide
     implementation("com.github.bumptech.glide:glide:$glideVersion") {

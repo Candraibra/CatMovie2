@@ -2,8 +2,8 @@ package com.candraibra.catmovie2.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import com.candraibra.catmovie2.data.local.Movie;
-import com.candraibra.catmovie2.data.local.Tv;
+import com.candraibra.catmovie2.data.local.entity.Movie;
+import com.candraibra.catmovie2.data.local.entity.Tv;
 import com.candraibra.catmovie2.utils.DummyData;
 
 public class DetailViewModel extends ViewModel {

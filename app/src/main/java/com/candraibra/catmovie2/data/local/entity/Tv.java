@@ -1,4 +1,4 @@
-package com.candraibra.catmovie2.data.local;
+package com.candraibra.catmovie2.data.local.entity;
 
 public class Tv {
     private String tvId;

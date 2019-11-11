@@ -1,8 +1,8 @@
 package com.candraibra.catmovie2.utils;
 
 import com.candraibra.catmovie2.R;
-import com.candraibra.catmovie2.data.local.Movie;
-import com.candraibra.catmovie2.data.local.Tv;
+import com.candraibra.catmovie2.data.local.entity.Movie;
+import com.candraibra.catmovie2.data.local.entity.Tv;
 
 import java.util.ArrayList;
 

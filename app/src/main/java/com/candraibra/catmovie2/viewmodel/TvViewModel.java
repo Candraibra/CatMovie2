@@ -1,15 +1,33 @@
 package com.candraibra.catmovie2.viewmodel;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
+import android.util.Log;
 
-import com.candraibra.catmovie2.data.local.entity.Tv;
-import com.candraibra.catmovie2.utils.DummyData;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
-import java.util.ArrayList;
+import com.candraibra.catmovie2.data.Repository;
+import com.candraibra.catmovie2.data.network.tv.TvResults;
 
-public class TvViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
-    public ArrayList<Tv> getTv() {
-        return DummyData.generateDummyTvs();
+import java.util.List;
+
+public class TvViewModel extends AndroidViewModel {
+    private Repository repository;
+
+    public TvViewModel(@NonNull Application application) {
+        super(application);
+        repository = new Repository(application);
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d("xxx", "data cleared");
+    }
+
+    public LiveData<List<TvResults>> mLiveTvData() {
+        return repository.mLiveTvData();
+    }
+
 }

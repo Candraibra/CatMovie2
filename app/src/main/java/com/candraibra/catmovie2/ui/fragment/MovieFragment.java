@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,15 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.adapter.MovieAdapter;
-import com.candraibra.catmovie2.data.local.entity.Movie;
+import com.candraibra.catmovie2.data.network.movie.MovieResults;
 import com.candraibra.catmovie2.viewmodel.MovieViewModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MovieFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private ShimmerFrameLayout shimmer;
 
+    private MovieAdapter movieAdapter = new MovieAdapter(getActivity());
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -33,24 +37,31 @@ public class MovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.rv_movie);
+        shimmer = view.findViewById(R.id.shimmerLayout);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            //define viewModel
-            MovieViewModel mViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-            ArrayList<Movie> movies = mViewModel.getMovie();
+            MovieViewModel viewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+            viewModel.mLiveMovieData().observe(this, results -> {
+                shimmer.stopShimmer();
+                shimmer.setVisibility(View.GONE);
+                setupRecyclerView(results);
+                movieAdapter.setMovieList(results);
+            });
+        }
+    }
 
-            //adapter
-            MovieAdapter movieAdapter = new MovieAdapter(getActivity());
-            movieAdapter.setMovieList(movies);
-
-            //recyclerView
+    private void setupRecyclerView(List<MovieResults> results) {
+        if (results != null) {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(movieAdapter);
+            movieAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getActivity(), "List Null", Toast.LENGTH_SHORT).show();
         }
     }
 

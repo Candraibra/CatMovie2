@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,15 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.adapter.TvAdapter;
-import com.candraibra.catmovie2.data.local.entity.Tv;
+import com.candraibra.catmovie2.data.network.tv.TvResults;
 import com.candraibra.catmovie2.viewmodel.TvViewModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TvFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private ShimmerFrameLayout shimmer;
 
+    private TvAdapter tvAdapter = new TvAdapter(getActivity());
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -33,6 +37,7 @@ public class TvFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.rv_tv);
+        shimmer = view.findViewById(R.id.shimmerLayout);
     }
 
     @Override
@@ -40,19 +45,25 @@ public class TvFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // TODO: Use the ViewModel
         if (getActivity() != null) {
-            //define viewModel
-            TvViewModel mViewModel = ViewModelProviders.of(this).get(TvViewModel.class);
-            ArrayList<Tv> tvs = mViewModel.getTv();
-
-            //adapter
-            TvAdapter tvAdapter = new TvAdapter(getActivity());
-            tvAdapter.setTvArrayList(tvs);
-
-            //recyclerView
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(tvAdapter);
+            TvViewModel viewModel = ViewModelProviders.of(this).get(TvViewModel.class);
+            viewModel.mLiveTvData().observe(this, results -> {
+                shimmer.stopShimmer();
+                shimmer.setVisibility(View.GONE);
+                setupRecyclerView(results);
+                tvAdapter.setTvList(results);
+            });
         }
     }
 
+    private void setupRecyclerView(List<TvResults> results) {
+
+        if (results != null) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setAdapter(tvAdapter);
+            tvAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getActivity(), "List Null", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

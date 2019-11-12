@@ -11,27 +11,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.candraibra.catmovie2.R;
-import com.candraibra.catmovie2.data.local.entity.Tv;
+import com.candraibra.catmovie2.data.network.tv.TvResults;
 import com.candraibra.catmovie2.ui.activity.DetailTvActivity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder> {
 
     private Activity activity;
-    private ArrayList<Tv> tvArrayList;
+    private List<TvResults> tvList;
 
     public TvAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    private ArrayList<Tv> getTvArrayList() {
-        return tvArrayList;
+    private List<TvResults> getTvList() {
+        return tvList;
     }
 
-    public void setTvArrayList(ArrayList<Tv> tvArrayList) {
-        this.tvArrayList = tvArrayList;
+    public void setTvList(List<TvResults> tvList) {
+        this.tvList = tvList;
     }
 
 
@@ -46,12 +47,12 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TvAdapter.MyViewHolder holder, int i) {
-        holder.tvTitle.setText(tvArrayList.get(i).getTitle());
-        holder.tvDesc.setText(tvArrayList.get(i).getDesc());
-        holder.imgPhoto.setImageResource(tvArrayList.get(i).getImage());
+        holder.tvTitle.setText(tvList.get(i).getName());
+        holder.tvDesc.setText(tvList.get(i).getOverview());
+        Glide.with(holder.itemView).load("https://image.tmdb.org/t/p/w500" + tvList.get(i).getPosterPath()).placeholder(R.drawable.loading).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(activity, DetailTvActivity.class);
-            intent.putExtra(DetailTvActivity.EXTRA_TV, getTvArrayList().get(i).getTvId());
+            intent.putExtra(DetailTvActivity.EXTRA_TV, tvList.get(i).getId());
             activity.startActivity(intent);
         });
 
@@ -59,7 +60,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return tvArrayList.size();
+        return tvList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

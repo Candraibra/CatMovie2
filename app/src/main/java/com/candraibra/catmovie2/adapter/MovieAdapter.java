@@ -11,27 +11,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.candraibra.catmovie2.R;
-import com.candraibra.catmovie2.data.local.entity.Movie;
+import com.candraibra.catmovie2.data.network.movie.MovieResults;
 import com.candraibra.catmovie2.ui.activity.DetailMovieActivity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
 
     private final Activity activity;
-    private ArrayList<Movie> movieList;
+    private List<MovieResults> movieList;
 
     public MovieAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    private ArrayList<Movie> getMovieList() {
+    private List<MovieResults> getMovieList() {
         return movieList;
     }
 
-    public void setMovieList(ArrayList<Movie> movieList) {
+    public void setMovieList(List<MovieResults> movieList) {
         this.movieList = movieList;
     }
 
@@ -47,12 +48,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MyViewHolder holder, int i) {
         holder.tvTitle.setText(movieList.get(i).getTitle());
-        holder.tvDesc.setText(movieList.get(i).getDesc());
-        holder.imgPhoto.setImageResource(movieList.get(i).getImage());
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, DetailMovieActivity.class);
-            intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, getMovieList().get(i).getMovieId());
-            activity.startActivity(intent);
+        holder.tvDesc.setText(movieList.get(i).getOverview());
+        Glide.with(holder.itemView).load("https://image.tmdb.org/t/p/w500" + movieList.get(i).getPosterPath()).placeholder(R.drawable.loading).into(holder.imgPhoto);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, DetailMovieActivity.class);
+                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, getMovieList().get(i).getId());
+            }
         });
 
     }
@@ -69,7 +72,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         MyViewHolder(View view) {
             super(view);
-
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvDesc = itemView.findViewById(R.id.tv_desc);
             imgPhoto = itemView.findViewById(R.id.iv_poster);

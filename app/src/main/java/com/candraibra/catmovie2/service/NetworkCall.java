@@ -2,11 +2,13 @@ package com.candraibra.catmovie2.service;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.candraibra.catmovie2.BuildConfig;
 import com.candraibra.catmovie2.data.network.movie.MovieResponse;
 import com.candraibra.catmovie2.data.network.movie.MovieResults;
+import com.candraibra.catmovie2.data.network.tv.TvResponse;
 import com.candraibra.catmovie2.data.network.tv.TvResults;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,11 +25,10 @@ public class NetworkCall {
     private static MutableLiveData<List<MovieResults>> movieData = new MutableLiveData<>();
     private static MutableLiveData<List<TvResults>> tvData = new MutableLiveData<>();
 
-    private TMDBApi apiClient = ApiClient.getClient().create(TMDBApi.class);
+    private static TMDBApi apiClient = ApiClient.getClient().create(TMDBApi.class);
 
 
-    public void getPopularMovie() {
-
+    public static void getPopularMovie() {
         Call<MovieResponse> call = apiClient.getMoviePopular(BuildConfig.ApiKey, LANGUAGE, 1);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
@@ -47,7 +48,37 @@ public class NetworkCall {
                 Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
             }
         });
-
-
     }
+
+
+    public static void getPopularTv() {
+        Call<TvResponse> tvResponseCall = apiClient.getTvPopular(BuildConfig.ApiKey, LANGUAGE, 1);
+        tvResponseCall.enqueue(new Callback<TvResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<TvResponse> call, @NotNull Response<TvResponse> response) {
+                if (response.isSuccessful()) {
+                    TvResponse tvResponse = response.body();
+                    if (tvResponse != null && tvResponse.getResults() != null) {
+                        tvData.postValue(tvResponse.getResults());
+                    } else {
+                        Log.d("NetworkCall", "Empty Data");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<TvResponse> call, @NotNull Throwable t) {
+                Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
+            }
+        });
+    }
+
+    public static LiveData<List<MovieResults>> getDataMovie() {
+        return movieData;
+    }
+
+    public static LiveData<List<TvResults>> getDataTv() {
+        return tvData;
+    }
+
 }

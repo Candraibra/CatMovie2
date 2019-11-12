@@ -1,7 +1,5 @@
 package com.candraibra.catmovie2.service;
 
-import android.database.Observable;
-
 import com.candraibra.catmovie2.data.network.movie.MovieResponse;
 import com.candraibra.catmovie2.data.network.tv.TvResponse;
 
@@ -22,7 +20,7 @@ public interface TMDBApi {
     // query for tvs
 
     @GET("tv/popular")
-    Observable<TvResponse> getTvPopular(
+    Call<TvResponse> getTvPopular(
             @Query("api_key") String apiKey,
             @Query("language") String language,
             @Query("page") int page);

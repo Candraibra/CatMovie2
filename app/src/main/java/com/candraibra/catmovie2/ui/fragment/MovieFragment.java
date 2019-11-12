@@ -23,8 +23,8 @@ import java.util.List;
 
 public class MovieFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private ShimmerFrameLayout shimmer;
+    RecyclerView recyclerView;
+    ShimmerFrameLayout shimmer;
 
     private MovieAdapter movieAdapter = new MovieAdapter(getActivity());
 

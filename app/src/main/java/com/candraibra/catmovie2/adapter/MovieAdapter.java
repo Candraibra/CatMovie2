@@ -20,8 +20,7 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
-
-    private final Activity activity;
+    private Activity activity;
     private List<MovieResults> movieList;
 
     public MovieAdapter(Activity activity) {
@@ -50,13 +49,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.tvTitle.setText(movieList.get(i).getTitle());
         holder.tvDesc.setText(movieList.get(i).getOverview());
         Glide.with(holder.itemView).load("https://image.tmdb.org/t/p/w500" + movieList.get(i).getPosterPath()).placeholder(R.drawable.loading).into(holder.imgPhoto);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, DetailMovieActivity.class);
-                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, getMovieList().get(i).getId());
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(activity, DetailMovieActivity.class);
+//                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, getMovieList().get(i).getId());
+//            }
+//        });
 
     }
 

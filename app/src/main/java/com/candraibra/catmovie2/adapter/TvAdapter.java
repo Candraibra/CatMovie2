@@ -1,7 +1,6 @@
 package com.candraibra.catmovie2.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.data.network.tv.TvResults;
-import com.candraibra.catmovie2.ui.activity.DetailTvActivity;
 
 import java.util.List;
 
@@ -50,11 +48,6 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder> {
         holder.tvTitle.setText(tvList.get(i).getName());
         holder.tvDesc.setText(tvList.get(i).getOverview());
         Glide.with(holder.itemView).load("https://image.tmdb.org/t/p/w500" + tvList.get(i).getPosterPath()).placeholder(R.drawable.loading).into(holder.imgPhoto);
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, DetailTvActivity.class);
-            intent.putExtra(DetailTvActivity.EXTRA_TV, tvList.get(i).getId());
-            activity.startActivity(intent);
-        });
 
     }
 

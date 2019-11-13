@@ -21,7 +21,7 @@ public class DetailTvActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_detail);
+      //  setContentView(R.layout.layout_detail);
         //viewModel
         DetailViewModel viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
         //init views
@@ -37,17 +37,17 @@ public class DetailTvActivity extends AppCompatActivity {
 //            finish();
 //        });
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String tvId = extras.getString(EXTRA_TV);
-            if (tvId != null) {
-                viewModel.setTvId(tvId);
-            }
-            if (viewModel.getTvs() != null) {
-                makeView(viewModel.getTvs());
-            }
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            String tvId = extras.getString(EXTRA_TV);
+//            if (tvId != null) {
+//                viewModel.setTvId(tvId);
+//            }
+//            if (viewModel.getTvs() != null) {
+//                makeView(viewModel.getTvs());
+//            }
 
-        }
+//        }
     }
 
     private void makeView(Tv tv) {

@@ -1,6 +1,8 @@
 package com.candraibra.catmovie2.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.adapter.MovieAdapter;
 import com.candraibra.catmovie2.data.network.movie.MovieResults;
+import com.candraibra.catmovie2.ui.activity.DetailMovieActivity;
+import com.candraibra.catmovie2.utils.ItemClickSupport;
 import com.candraibra.catmovie2.viewmodel.MovieViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -23,10 +27,10 @@ import java.util.List;
 
 public class MovieFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    ShimmerFrameLayout shimmer;
-
+    private RecyclerView recyclerView;
+    private ShimmerFrameLayout shimmer;
     private MovieAdapter movieAdapter = new MovieAdapter(getActivity());
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,6 +60,11 @@ public class MovieFragment extends Fragment {
 
     private void setupRecyclerView(List<MovieResults> results) {
         if (results != null) {
+            ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
+                Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
+                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE,  results.get(position));
+                startActivity(intent);
+            });
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(movieAdapter);

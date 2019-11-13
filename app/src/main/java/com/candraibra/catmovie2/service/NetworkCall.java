@@ -25,6 +25,9 @@ public class NetworkCall {
     private static MutableLiveData<List<MovieResults>> movieData = new MutableLiveData<>();
     private static MutableLiveData<List<TvResults>> tvData = new MutableLiveData<>();
 
+    private static MutableLiveData<MovieResults> movieDataById = new MutableLiveData<>();
+    private static MutableLiveData<TvResults> tvDataById = new MutableLiveData<>();
+
     private static TMDBApi apiClient = ApiClient.getClient().create(TMDBApi.class);
 
 
@@ -73,6 +76,51 @@ public class NetworkCall {
         });
     }
 
+    public static void getMovieById(int id) {
+        Call<MovieResults> movieResultsCall = apiClient.getMovieById(id, BuildConfig.ApiKey, LANGUAGE);
+        movieResultsCall.enqueue(new Callback<MovieResults>() {
+            @Override
+            public void onResponse(@NotNull Call<MovieResults> call, @NotNull Response<MovieResults> response) {
+                if (response.isSuccessful()) {
+                    MovieResults movieResults = response.body();
+                    if (movieResults != null) {
+                        movieDataById.postValue(movieResults);
+                    } else {
+                        Log.d("NetworkCall", "Empty Data");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<MovieResults> call, @NotNull Throwable t) {
+                Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
+            }
+        });
+    }
+
+
+    public static void getTvById(int id) {
+        Call<TvResults> tvResultsCall = apiClient.getTvById(id, BuildConfig.ApiKey, LANGUAGE);
+        tvResultsCall.enqueue(new Callback<TvResults>() {
+            @Override
+            public void onResponse(@NotNull Call<TvResults> call, @NotNull Response<TvResults> response) {
+                if (response.isSuccessful()) {
+                    TvResults tvResults = response.body();
+                    if (tvResults != null) {
+                        tvDataById.postValue(tvResults);
+                    } else {
+                        Log.d("NetworkCall", "Empty Data");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<TvResults> call, @NotNull Throwable t) {
+                Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
+            }
+        });
+    }
+
     public static LiveData<List<MovieResults>> getDataMovie() {
         return movieData;
     }
@@ -80,5 +128,14 @@ public class NetworkCall {
     public static LiveData<List<TvResults>> getDataTv() {
         return tvData;
     }
+
+    public static LiveData<MovieResults> getMovieDataById() {
+        return movieDataById;
+    }
+
+    public static LiveData<TvResults> getTvByDataId() {
+        return tvDataById;
+    }
+
 
 }

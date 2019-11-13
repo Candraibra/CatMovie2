@@ -1,50 +1,33 @@
 package com.candraibra.catmovie2.viewmodel;
 
+import android.content.Context;
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.candraibra.catmovie2.data.local.entity.Movie;
-import com.candraibra.catmovie2.data.local.entity.Tv;
-import com.candraibra.catmovie2.utils.DummyData;
+import com.candraibra.catmovie2.data.Repository;
+import com.candraibra.catmovie2.data.network.movie.MovieResults;
+import com.candraibra.catmovie2.data.network.tv.TvResults;
 
 public class DetailViewModel extends ViewModel {
-    private Tv mTv;
-    private Movie mMovie;
-    private String tvId;
-    private String movieId;
+    private Repository repository;
 
-    public Movie getMovies() {
-        for (int i = 0; i < DummyData.generateDummyMovies().size(); i++) {
-            Movie movies = DummyData.generateDummyMovies().get(i);
-            if (movies.getMovieId().equals(movieId)) {
-                mMovie = movies;
-            }
-        }
-        return mMovie;
+    DetailViewModel(int id, Context context) {
+        repository = new Repository(id, context);
     }
 
-    public Tv getTvs() {
-        for (int i = 0; i < DummyData.generateDummyTvs().size(); i++) {
-            Tv tvs = DummyData.generateDummyTvs().get(i);
-            if (tvs.getTvId().equals(tvId)) {
-                mTv = tvs;
-            }
-        }
-        return mTv;
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d("xxx", "data cleared");
     }
 
-    public String getTvId() {
-        return tvId;
+    public LiveData<MovieResults> getMovieById() {
+        return repository.mLiveMovieDataById();
     }
 
-    public void setTvId(String tvId) {
-        this.tvId = tvId;
-    }
-
-    public String getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(String movieId) {
-        this.movieId = movieId;
+    public LiveData<TvResults> getTvById() {
+        return repository.mLiveTvDataById();
     }
 }

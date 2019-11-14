@@ -15,6 +15,8 @@ import com.candraibra.catmovie2.data.network.movie.MovieResults;
 import com.candraibra.catmovie2.viewmodel.DetailViewModel;
 import com.candraibra.catmovie2.viewmodel.DetailViewModelFactory;
 
+import java.util.Objects;
+
 public class DetailMovieActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE = "movie_id";
@@ -27,7 +29,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         setContentView(R.layout.layout_detail);
         MovieResults selectedMovie;
         selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        DetailViewModelFactory factory = new DetailViewModelFactory(selectedMovie.getId(), getApplicationContext());
+        DetailViewModelFactory factory = new DetailViewModelFactory(Objects.requireNonNull(selectedMovie).getId(), getApplicationContext());
         DetailViewModel viewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         ImageButton btnBack = findViewById(R.id.backButton);
         imgPoster = findViewById(R.id.img_poster);
@@ -39,7 +41,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         });
         if (selectedMovie.getId() != 0) {
             viewModel.getMovieById().observe(this, results -> {
-                Glide.with(this).load("https://image.tmdb.org/t/p/w500" + results.getBackdropPath()).into(imgPoster);
+                Glide.with(this).load("https://image.tmdb.org/t/p/w780" + results.getBackdropPath()).into(imgPoster);
                 tvDesc.setText(results.getOverview());
                 tvTitle.setText(results.getTitle());
             });

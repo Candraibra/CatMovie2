@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 11/14/19 9:05 PM
+ *
+ */
+
 package com.candraibra.catmovie2.data.network.movie;
 
 import android.os.Parcel;

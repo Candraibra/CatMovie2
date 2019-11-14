@@ -1,10 +1,14 @@
 package com.candraibra.catmovie2.data.network.tv;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TvResults {
+public class TvResults implements Parcelable {
 
     @SerializedName("first_air_date")
     private String firstAirDate;
@@ -147,5 +151,59 @@ public class TvResults {
 
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
+    }
+
+    public static final Parcelable.Creator<TvResults> CREATOR = new Parcelable.Creator<TvResults>() {
+        @Override
+        public TvResults createFromParcel(Parcel source) {
+            return new TvResults(source);
+        }
+
+        @Override
+        public TvResults[] newArray(int size) {
+            return new TvResults[size];
+        }
+    };
+
+    public TvResults() {
+    }
+
+    protected TvResults(Parcel in) {
+        this.firstAirDate = in.readString();
+        this.overview = in.readString();
+        this.originalLanguage = in.readString();
+        this.genreIds = new ArrayList<Integer>();
+        in.readList(this.genreIds, Integer.class.getClassLoader());
+        this.posterPath = in.readString();
+        this.originCountry = in.createStringArrayList();
+        this.backdropPath = in.readString();
+        this.originalName = in.readString();
+        this.popularity = in.readDouble();
+        this.voteAverage = in.readDouble();
+        this.name = in.readString();
+        this.id = in.readInt();
+        this.voteCount = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.firstAirDate);
+        dest.writeString(this.overview);
+        dest.writeString(this.originalLanguage);
+        dest.writeList(this.genreIds);
+        dest.writeString(this.posterPath);
+        dest.writeStringList(this.originCountry);
+        dest.writeString(this.backdropPath);
+        dest.writeString(this.originalName);
+        dest.writeDouble(this.popularity);
+        dest.writeDouble(this.voteAverage);
+        dest.writeString(this.name);
+        dest.writeInt(this.id);
+        dest.writeInt(this.voteCount);
     }
 }

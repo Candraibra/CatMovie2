@@ -1,5 +1,6 @@
 package com.candraibra.catmovie2.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.adapter.TvAdapter;
 import com.candraibra.catmovie2.data.network.tv.TvResults;
+import com.candraibra.catmovie2.ui.activity.DetailTvActivity;
+import com.candraibra.catmovie2.utils.ItemClickSupport;
 import com.candraibra.catmovie2.viewmodel.TvViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -56,8 +59,12 @@ public class TvFragment extends Fragment {
     }
 
     private void setupRecyclerView(List<TvResults> results) {
-
         if (results != null) {
+            ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
+                Intent intent = new Intent(getActivity(), DetailTvActivity.class);
+                intent.putExtra(DetailTvActivity.EXTRA_TV, results.get(position));
+                startActivity(intent);
+            });
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(tvAdapter);

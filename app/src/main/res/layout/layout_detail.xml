@@ -55,7 +55,8 @@
             android:src="@drawable/ic_favorite_border"
             app:backgroundTint="@color/colorAccent"
             app:elevation="15dp"
-            app:fabSize="normal" />
+            app:fabSize="normal"
+            tools:ignore="RelativeOverlap" />
 
 
         <LinearLayout
@@ -107,6 +108,22 @@
                 tools:text="@string/lorem" />
 
         </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="0dp"
+            app:shimmer_auto_start="true"
+            app:shimmer_duration="1000">
+
+            <include layout="@layout/layout_shimmer_detail" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
     </RelativeLayout>

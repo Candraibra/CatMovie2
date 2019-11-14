@@ -37,7 +37,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/roundedcorner"
-                android:padding="7dp"
+                android:padding="10dp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,15 +46,17 @@
         </com.github.florent37.arclayout.ArcLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="275dp"
             android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_favorite_border"
             app:backgroundTint="@color/colorAccent"
             app:elevation="15dp"
             app:fabSize="normal" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,6 +108,8 @@
 
         </LinearLayout>
 
+
     </RelativeLayout>
+
 
 </ScrollView>

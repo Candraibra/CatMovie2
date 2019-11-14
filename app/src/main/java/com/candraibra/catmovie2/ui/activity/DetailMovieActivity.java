@@ -24,7 +24,7 @@ public class DetailMovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_detail_1);
+        setContentView(R.layout.layout_detail);
         MovieResults selectedMovie;
         selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         DetailViewModelFactory factory = new DetailViewModelFactory(selectedMovie.getId(), getApplicationContext());

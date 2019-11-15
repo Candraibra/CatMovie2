@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/15/19 7:06 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/15/19 7:01 AM
  *
  */
 
@@ -27,25 +27,31 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailTvActivity extends AppCompatActivity {
     public static final String EXTRA_TV = "tv_id";
-    private ImageView imgPoster;
-    private TextView tvTitle, tvDesc;
-    private ShimmerFrameLayout shimmer;
+    @BindView(R.id.img_poster)
+    public ImageView imgPoster;
+    @BindView(R.id.tv_desc)
+    public TextView tvDesc;
+    @BindView(R.id.tv_title)
+    public TextView tvTitle;
+    @BindView(R.id.shimmerLayout)
+    public ShimmerFrameLayout shimmer;
+    @BindView(R.id.backButton)
+    public ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_detail);
+        ButterKnife.bind(this);
         TvResults selectedTv;
         selectedTv = getIntent().getParcelableExtra(EXTRA_TV);
         DetailViewModelFactory factory = new DetailViewModelFactory(Objects.requireNonNull(selectedTv).getId(), getApplicationContext());
         DetailViewModel viewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
-        ImageButton btnBack = findViewById(R.id.backButton);
-        imgPoster = findViewById(R.id.img_poster);
-        tvTitle = findViewById(R.id.tv_title);
-        tvDesc = findViewById(R.id.tv_desc);
-        shimmer = findViewById(R.id.shimmerLayout);
         btnBack.setOnClickListener(v -> {
             onBackPressed();
             finish();

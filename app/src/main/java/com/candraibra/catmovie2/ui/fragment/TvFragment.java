@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/18/19 10:11 AM
  *
  */
 
@@ -28,6 +28,7 @@ import com.candraibra.catmovie2.data.network.tv.TvResults;
 import com.candraibra.catmovie2.ui.activity.DetailTvActivity;
 import com.candraibra.catmovie2.utils.ItemClickSupport;
 import com.candraibra.catmovie2.viewmodel.TvViewModel;
+import com.candraibra.catmovie2.viewmodel.ViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
@@ -56,7 +57,9 @@ public class TvFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // TODO: Use the ViewModel
         if (getActivity() != null) {
-            TvViewModel viewModel = ViewModelProviders.of(this).get(TvViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+            TvViewModel viewModel = ViewModelProviders.of(this, factory).get(TvViewModel.class);
+//            TvViewModel viewModel = ViewModelProviders.of(this).get(TvViewModel.class);
             viewModel.mLiveTvData().observe(this, results -> {
                 shimmer.stopShimmer();
                 shimmer.setVisibility(View.GONE);

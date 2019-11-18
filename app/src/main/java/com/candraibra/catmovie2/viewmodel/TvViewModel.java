@@ -1,31 +1,29 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/18/19 10:56 AM
  *
  */
 
 package com.candraibra.catmovie2.viewmodel;
 
-import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.candraibra.catmovie2.data.Repository;
 import com.candraibra.catmovie2.data.network.tv.TvResults;
 
 import java.util.List;
 
-public class TvViewModel extends AndroidViewModel {
+public class TvViewModel extends ViewModel {
     private Repository repository;
 
-    public TvViewModel(@NonNull Application application) {
-        super(application);
-        repository = new Repository(application);
+
+    TvViewModel(Repository repository) {
+        this.repository = repository;
     }
 
     @Override

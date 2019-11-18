@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/18/19 10:56 AM
  *
  */
 
@@ -17,6 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieResults implements Parcelable {
+    public MovieResults(String overview, String originalLanguage, String originalTitle, boolean video, String title, List<Integer> genreIds, String posterPath, String backdropPath, String releaseDate, double popularity, double voteAverage, int id, boolean adult, int voteCount) {
+        this.overview = overview;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.video = video;
+        this.title = title;
+        this.genreIds = genreIds;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
+        this.releaseDate = releaseDate;
+        this.popularity = popularity;
+        this.voteAverage = voteAverage;
+        this.id = id;
+        this.adult = adult;
+        this.voteCount = voteCount;
+    }
 
     @SerializedName("overview")
     private String overview;
@@ -195,8 +211,6 @@ public class MovieResults implements Parcelable {
         dest.writeInt(this.voteCount);
     }
 
-    public MovieResults() {
-    }
 
     protected MovieResults(Parcel in) {
         this.overview = in.readString();
@@ -204,7 +218,7 @@ public class MovieResults implements Parcelable {
         this.originalTitle = in.readString();
         this.video = in.readByte() != 0;
         this.title = in.readString();
-        this.genreIds = new ArrayList<Integer>();
+        this.genreIds = new ArrayList<>();
         in.readList(this.genreIds, Integer.class.getClassLoader());
         this.posterPath = in.readString();
         this.backdropPath = in.readString();

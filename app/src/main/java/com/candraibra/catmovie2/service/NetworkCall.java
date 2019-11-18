@@ -1,13 +1,14 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/18/19 10:56 AM
  *
  */
 
 package com.candraibra.catmovie2.service;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -28,16 +29,26 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NetworkCall {
-
+    private static NetworkCall INSTANCE;
     private static final String LANGUAGE = "en-US";
     private static MutableLiveData<List<MovieResults>> movieData = new MutableLiveData<>();
     private static MutableLiveData<List<TvResults>> tvData = new MutableLiveData<>();
-
     private static MutableLiveData<MovieResults> movieDataById = new MutableLiveData<>();
     private static MutableLiveData<TvResults> tvDataById = new MutableLiveData<>();
-
     private static TMDBApi apiClient = ApiClient.getClient().create(TMDBApi.class);
 
+    private Application application;
+
+    private NetworkCall(Application application) {
+        this.application = application;
+    }
+
+    public static NetworkCall getInstance(Application application) {
+        if (INSTANCE == null) {
+            INSTANCE = new NetworkCall(application);
+        }
+        return INSTANCE;
+    }
 
     public static void getPopularMovie() {
         Call<MovieResponse> call = apiClient.getMoviePopular(BuildConfig.ApiKey, LANGUAGE, 1);

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/18/19 10:56 AM
  *
  */
 
@@ -17,45 +17,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TvResults implements Parcelable {
+    public static final Parcelable.Creator<TvResults> CREATOR = new Parcelable.Creator<TvResults>() {
+        @Override
+        public TvResults createFromParcel(Parcel source) {
+            return new TvResults(source);
+        }
 
+        @Override
+        public TvResults[] newArray(int size) {
+            return new TvResults[size];
+        }
+    };
+
+    public TvResults(String firstAirDate, String overview, String originalLanguage, List<Integer> genreIds, String posterPath, List<String> originCountry, String backdropPath, String originalName, double popularity, double voteAverage, String name, int id, int voteCount) {
+        this.firstAirDate = firstAirDate;
+        this.overview = overview;
+        this.originalLanguage = originalLanguage;
+        this.genreIds = genreIds;
+        this.posterPath = posterPath;
+        this.originCountry = originCountry;
+        this.backdropPath = backdropPath;
+        this.originalName = originalName;
+        this.popularity = popularity;
+        this.voteAverage = voteAverage;
+        this.name = name;
+        this.id = id;
+        this.voteCount = voteCount;
+    }
     @SerializedName("first_air_date")
     private String firstAirDate;
-
     @SerializedName("overview")
     private String overview;
-
     @SerializedName("original_language")
     private String originalLanguage;
-
     @SerializedName("genre_ids")
     private List<Integer> genreIds;
-
     @SerializedName("poster_path")
     private String posterPath;
-
     @SerializedName("origin_country")
     private List<String> originCountry;
-
     @SerializedName("backdrop_path")
     private String backdropPath;
-
     @SerializedName("original_name")
     private String originalName;
-
     @SerializedName("popularity")
     private double popularity;
-
     @SerializedName("vote_average")
     private double voteAverage;
-
     @SerializedName("name")
     private String name;
-
     @SerializedName("id")
     private int id;
-
     @SerializedName("vote_count")
     private int voteCount;
+
 
     public String getFirstAirDate() {
         return firstAirDate;
@@ -161,26 +176,11 @@ public class TvResults implements Parcelable {
         this.voteCount = voteCount;
     }
 
-    public static final Parcelable.Creator<TvResults> CREATOR = new Parcelable.Creator<TvResults>() {
-        @Override
-        public TvResults createFromParcel(Parcel source) {
-            return new TvResults(source);
-        }
-
-        @Override
-        public TvResults[] newArray(int size) {
-            return new TvResults[size];
-        }
-    };
-
-    public TvResults() {
-    }
-
-    protected TvResults(Parcel in) {
+    private TvResults(Parcel in) {
         this.firstAirDate = in.readString();
         this.overview = in.readString();
         this.originalLanguage = in.readString();
-        this.genreIds = new ArrayList<Integer>();
+        this.genreIds = new ArrayList<>();
         in.readList(this.genreIds, Integer.class.getClassLoader());
         this.posterPath = in.readString();
         this.originCountry = in.createStringArrayList();
@@ -192,7 +192,6 @@ public class TvResults implements Parcelable {
         this.id = in.readInt();
         this.voteCount = in.readInt();
     }
-
     @Override
     public int describeContents() {
         return 0;

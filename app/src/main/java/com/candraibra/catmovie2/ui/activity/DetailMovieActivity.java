@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/15/19 7:06 AM
+ *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/15/19 7:01 AM
+ *  * Last modified 11/18/19 10:56 AM
  *
  */
 
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -43,6 +44,8 @@ public class DetailMovieActivity extends AppCompatActivity {
     public ShimmerFrameLayout shimmer;
     @BindView(R.id.backButton)
     public ImageButton btnBack;
+    @BindView(R.id.btn_fav)
+    public ImageButton btnFav;
 
 
     @Override
@@ -58,6 +61,7 @@ public class DetailMovieActivity extends AppCompatActivity {
             onBackPressed();
             finish();
         });
+        btnFav.setOnClickListener(v -> Toast.makeText(this, "Feature not ready yet", Toast.LENGTH_SHORT).show());
         if (selectedMovie.getId() != 0) {
             viewModel.getMovieById().observe(this, results -> {
                 shimmer.stopShimmer();
@@ -69,8 +73,5 @@ public class DetailMovieActivity extends AppCompatActivity {
         } else {
             Log.d("DetailMovie", "movie id = 0");
         }
-
-
     }
-
 }

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
+ *  * Created by Candra Ibra Sanie on 11/18/19 4:20 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 10:56 AM
+ *  * Last modified 11/18/19 4:20 PM
  *
  */
 
@@ -29,12 +29,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NetworkCall {
-    private static NetworkCall INSTANCE;
     private static final String LANGUAGE = "en-US";
+    private static NetworkCall INSTANCE;
     private static MutableLiveData<List<MovieResults>> movieData = new MutableLiveData<>();
     private static MutableLiveData<List<TvResults>> tvData = new MutableLiveData<>();
-    private static MutableLiveData<MovieResults> movieDataById = new MutableLiveData<>();
-    private static MutableLiveData<TvResults> tvDataById = new MutableLiveData<>();
     private static TMDBApi apiClient = ApiClient.getClient().create(TMDBApi.class);
 
     private Application application;
@@ -95,7 +93,16 @@ public class NetworkCall {
         });
     }
 
-    public static void getMovieById(int id) {
+    public static LiveData<List<MovieResults>> getDataMovie() {
+        return movieData;
+    }
+
+    public static LiveData<List<TvResults>> getDataTv() {
+        return tvData;
+    }
+
+    public LiveData<MovieResults> getMovieById(int id) {
+        MutableLiveData<MovieResults> movieDataById = new MutableLiveData<>();
         Call<MovieResults> movieResultsCall = apiClient.getMovieById(id, BuildConfig.ApiKey, LANGUAGE);
         movieResultsCall.enqueue(new Callback<MovieResults>() {
             @Override
@@ -115,10 +122,11 @@ public class NetworkCall {
                 Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
             }
         });
+        return movieDataById;
     }
 
-
-    public static void getTvById(int id) {
+    public LiveData<TvResults> getTvById(int id) {
+        MutableLiveData<TvResults> tvDataById = new MutableLiveData<>();
         Call<TvResults> tvResultsCall = apiClient.getTvById(id, BuildConfig.ApiKey, LANGUAGE);
         tvResultsCall.enqueue(new Callback<TvResults>() {
             @Override
@@ -138,23 +146,16 @@ public class NetworkCall {
                 Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
             }
         });
-    }
-
-    public static LiveData<List<MovieResults>> getDataMovie() {
-        return movieData;
-    }
-
-    public static LiveData<List<TvResults>> getDataTv() {
-        return tvData;
-    }
-
-    public static LiveData<MovieResults> getMovieDataById() {
-        return movieDataById;
-    }
-
-    public static LiveData<TvResults> getTvByDataId() {
         return tvDataById;
     }
+
+//    public static LiveData<MovieResults> getMovieDataById() {
+//        return movieDataById;
+//    }
+//
+//    public static LiveData<TvResults> getTvByDataId() {
+//        return tvDataById;
+//    }
 
 
 }

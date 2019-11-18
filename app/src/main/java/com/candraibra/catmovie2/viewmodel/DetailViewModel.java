@@ -1,14 +1,13 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/18/19 4:20 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/18/19 4:20 PM
  *
  */
 
 package com.candraibra.catmovie2.viewmodel;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -19,10 +18,29 @@ import com.candraibra.catmovie2.data.network.movie.MovieResults;
 import com.candraibra.catmovie2.data.network.tv.TvResults;
 
 public class DetailViewModel extends ViewModel {
+
+    private Integer movieId;
+    private Integer tvId;
     private Repository repository;
 
-    DetailViewModel(int id, Context context) {
-        repository = new Repository(id, context);
+    DetailViewModel(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Integer getTvId() {
+        return tvId;
+    }
+
+    public void setTvId(Integer tvId) {
+        this.tvId = tvId;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     @Override
@@ -32,10 +50,11 @@ public class DetailViewModel extends ViewModel {
     }
 
     public LiveData<MovieResults> getMovieById() {
-        return repository.mLiveMovieDataById();
+        return repository.mLiveMovieDataById(movieId);
     }
 
     public LiveData<TvResults> getTvById() {
-        return repository.mLiveTvDataById();
+        return repository.mLiveTvDataById(tvId);
     }
+
 }

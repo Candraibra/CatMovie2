@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
+ *  * Created by Candra Ibra Sanie on 11/18/19 4:20 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 10:48 AM
+ *  * Last modified 11/18/19 4:20 PM
  *
  */
 
@@ -19,51 +19,6 @@ public class FakeDataDummy {
 
         ArrayList<MovieResults> movies = new ArrayList<>();
 
-        movies.add(new MovieResults(
-                "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
-                "en",
-                "Joker",
-                false,
-                "Joker",
-                null,
-                "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-                "/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg",
-                "2019-10-02",
-                410.601,
-                8.5,
-                475557,
-                false,
-                5386));
-        movies.add(new MovieResults(
-                "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
-                "en",
-                "Joker",
-                false,
-                "Joker",
-                null,
-                "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-                "/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg",
-                "2019-10-02",
-                410.601,
-                8.5,
-                475557,
-                false,
-                5386));
-        movies.add(new MovieResults(
-                "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
-                "en",
-                "Joker",
-                false,
-                "Joker",
-                null,
-                "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-                "/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg",
-                "2019-10-02",
-                410.601,
-                8.5,
-                475557,
-                false,
-                5386));
         movies.add(new MovieResults(
                 "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
                 "en",
@@ -104,4 +59,27 @@ public class FakeDataDummy {
 
         return movies;
     }
+
+    public static ArrayList<MovieResults> generateDummyMoviesById(Integer movieId) {
+
+        ArrayList<MovieResults> movies = new ArrayList<>();
+
+        movies.add(new MovieResults(
+                "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
+                "en",
+                "Joker",
+                false,
+                "Joker",
+                null,
+                "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+                "/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg",
+                "2019-10-02",
+                410.601,
+                8.5,
+                475557,
+                false,
+                5386));
+        return movies;
+    }
+
 }

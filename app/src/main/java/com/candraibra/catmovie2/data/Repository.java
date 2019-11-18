@@ -1,14 +1,12 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
+ *  * Created by Candra Ibra Sanie on 11/18/19 4:20 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 10:27 AM
+ *  * Last modified 11/18/19 4:20 PM
  *
  */
 
 package com.candraibra.catmovie2.data;
-
-import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
@@ -28,12 +26,6 @@ public class Repository {
         NetworkCall.getPopularTv();
     }
 
-    public Repository(int id, Context context) {
-        NetworkCall.getMovieById(id);
-        NetworkCall.getTvById(id);
-    }
-
-
     public static Repository getInstance(NetworkCall networkCall) {
         if (INSTANCE == null) {
             INSTANCE = new Repository(networkCall);
@@ -52,13 +44,13 @@ public class Repository {
     }
 
     // Methods for MovieMovie
-    public LiveData<MovieResults> mLiveMovieDataById() {
-        return NetworkCall.getMovieDataById();
+    public LiveData<MovieResults> mLiveMovieDataById(Integer id) {
+        return networkCall.getMovieById(id);
     }
 
     // Methods for DetailTv
-    public LiveData<TvResults> mLiveTvDataById() {
-        return NetworkCall.getTvByDataId();
+    public LiveData<TvResults> mLiveTvDataById(Integer id) {
+        return networkCall.getTvById(id);
     }
 
 }

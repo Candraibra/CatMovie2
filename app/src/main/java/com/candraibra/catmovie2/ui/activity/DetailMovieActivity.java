@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
+ *  * Created by Candra Ibra Sanie on 11/18/19 4:20 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 10:56 AM
+ *  * Last modified 11/18/19 4:20 PM
  *
  */
 
@@ -23,7 +23,7 @@ import com.bumptech.glide.Glide;
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.data.network.movie.MovieResults;
 import com.candraibra.catmovie2.viewmodel.DetailViewModel;
-import com.candraibra.catmovie2.viewmodel.DetailViewModelFactory;
+import com.candraibra.catmovie2.viewmodel.ViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.Objects;
@@ -55,8 +55,9 @@ public class DetailMovieActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         MovieResults selectedMovie;
         selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        DetailViewModelFactory factory = new DetailViewModelFactory(Objects.requireNonNull(selectedMovie).getId(), getApplicationContext());
+        ViewModelFactory factory = ViewModelFactory.getInstance(this.getApplication());
         DetailViewModel viewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
+        viewModel.setMovieId(Objects.requireNonNull(selectedMovie).getId());
         btnBack.setOnClickListener(v -> {
             onBackPressed();
             finish();

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
+ *  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 10:11 AM
+ *  * Last modified 11/19/19 6:47 AM
  *
  */
 
@@ -24,21 +24,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.adapter.TvAdapter;
-import com.candraibra.catmovie2.data.network.tv.TvResults;
 import com.candraibra.catmovie2.ui.activity.DetailTvActivity;
 import com.candraibra.catmovie2.utils.ItemClickSupport;
 import com.candraibra.catmovie2.viewmodel.TvViewModel;
 import com.candraibra.catmovie2.viewmodel.ViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.util.List;
-
 public class TvFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ShimmerFrameLayout shimmer;
-
-    private TvAdapter tvAdapter = new TvAdapter(getActivity());
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -55,33 +50,27 @@ public class TvFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // TODO: Use the ViewModel
         if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
             TvViewModel viewModel = ViewModelProviders.of(this, factory).get(TvViewModel.class);
-//            TvViewModel viewModel = ViewModelProviders.of(this).get(TvViewModel.class);
             viewModel.mLiveTvData().observe(this, results -> {
                 shimmer.stopShimmer();
                 shimmer.setVisibility(View.GONE);
-                setupRecyclerView(results);
-                tvAdapter.setTvList(results);
+                TvAdapter tvAdapter = new TvAdapter(getActivity(), results);
+                if (results != null) {
+                    ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
+                        Intent intent = new Intent(getActivity(), DetailTvActivity.class);
+                        intent.putExtra(DetailTvActivity.EXTRA_TV, results.get(position));
+                        startActivity(intent);
+                    });
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(tvAdapter);
+                    tvAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), "List Null", Toast.LENGTH_SHORT).show();
+                }
             });
-        }
-    }
-
-    private void setupRecyclerView(List<TvResults> results) {
-        if (results != null) {
-            ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
-                Intent intent = new Intent(getActivity(), DetailTvActivity.class);
-                intent.putExtra(DetailTvActivity.EXTRA_TV, results.get(position));
-                startActivity(intent);
-            });
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(tvAdapter);
-            tvAdapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(getActivity(), "List Null", Toast.LENGTH_SHORT).show();
         }
     }
 }

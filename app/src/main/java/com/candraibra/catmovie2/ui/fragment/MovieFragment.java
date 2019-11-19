@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
+ *  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 10:11 AM
+ *  * Last modified 11/19/19 6:47 AM
  *
  */
 
@@ -18,34 +18,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.catmovie2.R;
 import com.candraibra.catmovie2.adapter.MovieAdapter;
-import com.candraibra.catmovie2.data.network.movie.MovieResults;
 import com.candraibra.catmovie2.ui.activity.DetailMovieActivity;
 import com.candraibra.catmovie2.utils.ItemClickSupport;
 import com.candraibra.catmovie2.viewmodel.MovieViewModel;
 import com.candraibra.catmovie2.viewmodel.ViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.util.List;
-
 public class MovieFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ShimmerFrameLayout shimmer;
-    private MovieAdapter movieAdapter = new MovieAdapter(getActivity());
 
-    @NonNull
-    private static MovieViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(MovieViewModel.class);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -68,25 +57,21 @@ public class MovieFragment extends Fragment {
             viewModel.mLiveMovieData().observe(this, results -> {
                 shimmer.stopShimmer();
                 shimmer.setVisibility(View.GONE);
-                setupRecyclerView(results);
-                movieAdapter.setMovieList(results);
+                MovieAdapter movieAdapter = new MovieAdapter(getActivity(), results);
+                if (results != null) {
+                    ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
+                        Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
+                        intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, results.get(position));
+                        startActivity(intent);
+                    });
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(movieAdapter);
+                    movieAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), "List Null", Toast.LENGTH_SHORT).show();
+                }
             });
-        }
-    }
-
-    private void setupRecyclerView(List<MovieResults> results) {
-        if (results != null) {
-            ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
-                Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
-                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, results.get(position));
-                startActivity(intent);
-            });
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(movieAdapter);
-            movieAdapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(getActivity(), "List Null", Toast.LENGTH_SHORT).show();
         }
     }
 

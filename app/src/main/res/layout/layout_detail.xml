@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 11/19/19 7:32 AM
+  ~  */
+  -->
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,12 +31,18 @@
             app:arc_height="50dp"
             app:arc_position="bottom">
 
-            <com.flaviofaria.kenburnsview.KenBurnsView
+            <!--            <com.flaviofaria.kenburnsview.KenBurnsView-->
+            <!--                android:id="@+id/img_poster"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:scaleType="fitXY"-->
+            <!--                tools:src="@drawable/poster_gotham" />-->
+            <ImageView
                 android:id="@+id/img_poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/poster_gotham" />
+                android:scaleType="centerCrop"
+                tools:src="@drawable/poster_gotham" />
 
             <ImageButton
                 android:id="@+id/backButton"

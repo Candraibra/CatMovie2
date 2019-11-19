@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 11/18/19 4:27 PM
+ *
+ */
+
 apply plugin: 'com.android.application'
 
 android {
@@ -14,6 +22,9 @@ android {
     buildTypes {
         buildTypes {
             debug {
+                applicationIdSuffix ".debug"
+                debuggable true
+
                 buildConfigField 'String', "ApiKey", MyAPI_Key
                 resValue 'string', "api_key", MyAPI_Key
 

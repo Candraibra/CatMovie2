@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/14/19 9:05 PM
+ *  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/14/19 9:05 PM
+ *  * Last modified 11/19/19 7:33 AM
  *
  */
 
@@ -29,16 +29,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     private Activity activity;
     private List<MovieResults> movieList;
 
-    public MovieAdapter(Activity activity) {
+    public MovieAdapter(Activity activity, List<MovieResults> movieList) {
         this.activity = activity;
+        this.movieList = movieList;
     }
 
     private List<MovieResults> getMovieList() {
         return movieList;
-    }
-
-    public void setMovieList(List<MovieResults> movieList) {
-        this.movieList = movieList;
     }
 
     @NonNull

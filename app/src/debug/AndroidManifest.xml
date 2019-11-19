@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Candra Ibra Sanie on 11/18/19 10:57 AM
+  ~  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 11/15/19 11:09 AM
+  ~  * Last modified 11/19/19 6:04 AM
   ~  */
   -->
 
@@ -10,8 +10,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.candraibra.catmovie2">
 
+    <!--Internet Permission-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".testing.SingleFragmentActivity" />
     </application>
+
 
 </manifest>

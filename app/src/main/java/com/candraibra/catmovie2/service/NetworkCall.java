@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 4:20 PM
+ *  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 4:20 PM
+ *  * Last modified 11/19/19 7:32 AM
  *
  */
 
@@ -19,6 +19,7 @@ import com.candraibra.catmovie2.data.network.movie.MovieResponse;
 import com.candraibra.catmovie2.data.network.movie.MovieResults;
 import com.candraibra.catmovie2.data.network.tv.TvResponse;
 import com.candraibra.catmovie2.data.network.tv.TvResults;
+import com.candraibra.catmovie2.utils.EspressoIdlingResource;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,6 +50,7 @@ public class NetworkCall {
     }
 
     public static void getPopularMovie() {
+        EspressoIdlingResource.increment();
         Call<MovieResponse> call = apiClient.getMoviePopular(BuildConfig.ApiKey, LANGUAGE, 1);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
@@ -68,10 +70,12 @@ public class NetworkCall {
                 Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
             }
         });
+        EspressoIdlingResource.decrement();
     }
 
 
     public static void getPopularTv() {
+        EspressoIdlingResource.increment();
         Call<TvResponse> tvResponseCall = apiClient.getTvPopular(BuildConfig.ApiKey, LANGUAGE, 1);
         tvResponseCall.enqueue(new Callback<TvResponse>() {
             @Override
@@ -91,6 +95,7 @@ public class NetworkCall {
                 Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
             }
         });
+        EspressoIdlingResource.decrement();
     }
 
     public static LiveData<List<MovieResults>> getDataMovie() {
@@ -102,6 +107,7 @@ public class NetworkCall {
     }
 
     public LiveData<MovieResults> getMovieById(int id) {
+        EspressoIdlingResource.increment();
         MutableLiveData<MovieResults> movieDataById = new MutableLiveData<>();
         Call<MovieResults> movieResultsCall = apiClient.getMovieById(id, BuildConfig.ApiKey, LANGUAGE);
         movieResultsCall.enqueue(new Callback<MovieResults>() {
@@ -122,10 +128,13 @@ public class NetworkCall {
                 Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
             }
         });
+        EspressoIdlingResource.decrement();
         return movieDataById;
+
     }
 
     public LiveData<TvResults> getTvById(int id) {
+        EspressoIdlingResource.increment();
         MutableLiveData<TvResults> tvDataById = new MutableLiveData<>();
         Call<TvResults> tvResultsCall = apiClient.getTvById(id, BuildConfig.ApiKey, LANGUAGE);
         tvResultsCall.enqueue(new Callback<TvResults>() {
@@ -146,16 +155,8 @@ public class NetworkCall {
                 Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
             }
         });
+        EspressoIdlingResource.decrement();
         return tvDataById;
     }
-
-//    public static LiveData<MovieResults> getMovieDataById() {
-//        return movieDataById;
-//    }
-//
-//    public static LiveData<TvResults> getTvByDataId() {
-//        return tvDataById;
-//    }
-
 
 }

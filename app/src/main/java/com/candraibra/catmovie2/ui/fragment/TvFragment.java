@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
+ *  * Created by Candra Ibra Sanie on 11/21/19 10:49 AM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/19/19 6:47 AM
+ *  * Last modified 11/21/19 10:49 AM
  *
  */
 
@@ -30,10 +30,14 @@ import com.candraibra.catmovie2.viewmodel.TvViewModel;
 import com.candraibra.catmovie2.viewmodel.ViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-public class TvFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private RecyclerView recyclerView;
-    private ShimmerFrameLayout shimmer;
+public class TvFragment extends Fragment {
+    @BindView(R.id.rv_tv)
+    public RecyclerView recyclerView;
+    @BindView(R.id.shimmerLayout)
+    public ShimmerFrameLayout shimmer;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -43,8 +47,7 @@ public class TvFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.rv_tv);
-        shimmer = view.findViewById(R.id.shimmerLayout);
+        ButterKnife.bind(this, view);
     }
 
     @Override

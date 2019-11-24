@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/19/19 7:33 AM
+ *  * Created by Candra Ibra Sanie on 11/24/19 5:41 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/19/19 7:32 AM
+ *  * Last modified 11/24/19 5:38 PM
  *
  */
 
@@ -32,8 +32,6 @@ import retrofit2.Response;
 public class NetworkCall {
     private static final String LANGUAGE = "en-US";
     private static NetworkCall INSTANCE;
-    private static MutableLiveData<List<MovieResults>> movieData = new MutableLiveData<>();
-    private static MutableLiveData<List<TvResults>> tvData = new MutableLiveData<>();
     private static TMDBApi apiClient = ApiClient.getClient().create(TMDBApi.class);
 
     private Application application;
@@ -49,33 +47,9 @@ public class NetworkCall {
         return INSTANCE;
     }
 
-    public static void getPopularMovie() {
+    public LiveData<List<TvResults>> getPopularTv() {
         EspressoIdlingResource.increment();
-        Call<MovieResponse> call = apiClient.getMoviePopular(BuildConfig.ApiKey, LANGUAGE, 1);
-        call.enqueue(new Callback<MovieResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<MovieResponse> call, @NotNull Response<MovieResponse> response) {
-                if (response.isSuccessful()) {
-                    MovieResponse moviesResponse = response.body();
-                    if (moviesResponse != null && moviesResponse.getResults() != null) {
-                        movieData.postValue(moviesResponse.getResults());
-                    } else {
-                        Log.d("NetworkCall", "Empty Data");
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<MovieResponse> call, @NotNull Throwable t) {
-                Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
-            }
-        });
-        EspressoIdlingResource.decrement();
-    }
-
-
-    public static void getPopularTv() {
-        EspressoIdlingResource.increment();
+        MutableLiveData<List<TvResults>> tvData = new MutableLiveData<>();
         Call<TvResponse> tvResponseCall = apiClient.getTvPopular(BuildConfig.ApiKey, LANGUAGE, 1);
         tvResponseCall.enqueue(new Callback<TvResponse>() {
             @Override
@@ -96,14 +70,42 @@ public class NetworkCall {
             }
         });
         EspressoIdlingResource.decrement();
-    }
-
-    public static LiveData<List<MovieResults>> getDataMovie() {
-        return movieData;
-    }
-
-    public static LiveData<List<TvResults>> getDataTv() {
         return tvData;
+    }
+
+//    public static LiveData<List<MovieResults>> getDataMovie() {
+//        return movieData;
+//    }
+//
+//    public static LiveData<List<TvResults>> getDataTv() {
+//        return tvData;
+//    }
+
+    public LiveData<List<MovieResults>> getPopularMovie() {
+        EspressoIdlingResource.increment();
+        MutableLiveData<List<MovieResults>> movieData = new MutableLiveData<>();
+        Call<MovieResponse> call = apiClient.getMoviePopular(BuildConfig.ApiKey, LANGUAGE, 1);
+        call.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<MovieResponse> call, @NotNull Response<MovieResponse> response) {
+                if (response.isSuccessful()) {
+                    MovieResponse moviesResponse = response.body();
+                    if (moviesResponse != null && moviesResponse.getResults() != null) {
+                        movieData.postValue(moviesResponse.getResults());
+                    } else {
+                        Log.d("NetworkCall", "Empty Data");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<MovieResponse> call, @NotNull Throwable t) {
+                Log.d("NetworkCall", "Failed Fetch getPopularMovie()/Failure");
+            }
+        });
+        EspressoIdlingResource.decrement();
+        return movieData;
+
     }
 
     public LiveData<MovieResults> getMovieById(int id) {

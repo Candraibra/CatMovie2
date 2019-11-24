@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/21/19 10:49 AM
+ *  * Created by Candra Ibra Sanie on 11/24/19 5:41 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/21/19 10:49 AM
+ *  * Last modified 11/24/19 5:41 PM
  *
  */
 
@@ -38,6 +38,7 @@ public class MovieFragment extends Fragment {
     public RecyclerView recyclerView;
     @BindView(R.id.shimmerLayout)
     public ShimmerFrameLayout shimmer;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -75,5 +76,4 @@ public class MovieFragment extends Fragment {
             });
         }
     }
-
 }

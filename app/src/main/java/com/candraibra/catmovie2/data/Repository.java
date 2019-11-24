@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Candra Ibra Sanie on 11/18/19 4:20 PM
+ *  * Created by Candra Ibra Sanie on 11/24/19 5:41 PM
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/18/19 4:20 PM
+ *  * Last modified 11/24/19 5:27 PM
  *
  */
 
@@ -22,8 +22,6 @@ public class Repository {
 
     private Repository(NetworkCall networkCall) {
         this.networkCall = networkCall;
-        NetworkCall.getPopularMovie();
-        NetworkCall.getPopularTv();
     }
 
     public static Repository getInstance(NetworkCall networkCall) {
@@ -35,12 +33,12 @@ public class Repository {
 
     // Methods for MovieFragment
     public LiveData<List<MovieResults>> mLiveMovieData() {
-        return NetworkCall.getDataMovie();
+        return networkCall.getPopularMovie();
     }
 
     // Methods for TvFragment
     public LiveData<List<TvResults>> mLiveTvData() {
-        return NetworkCall.getDataTv();
+        return networkCall.getPopularTv();
     }
 
     // Methods for MovieMovie
